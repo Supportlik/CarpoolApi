@@ -1,14 +1,14 @@
 version: 2.1
 
-orbs:
-  win: circleci/windows@2.2.0
-
 jobs:
-  build:    
+  build:
+    machine: true
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 19.03.13            
+      - run:
+          name: Login Docker
+          command:
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
       - run:
           name: Build Docker image
           command:
