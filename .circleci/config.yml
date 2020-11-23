@@ -7,7 +7,6 @@ jobs:
   build:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0
-
     steps:
       - checkout
       - run: 
@@ -19,6 +18,22 @@ jobs:
           command:
             dotnet restore
       - run:
-          name: Run App
+          name: Test App
           command:
-            dotnet run
+            dotnet test
+      - run:
+          name: Publish App
+          command:
+            dotnet publish -c Release
+      - run:
+          name: Login Docker
+          command:
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run:
+          name: Build Docker image
+          command:
+            docker build -t supportlik/carpool:$CIRCLE_BRANCH -t supportlik/carpool:latest -t supportlik/carpool:1.0.$CIRCLE_BUILD_NUM .
+      - run:
+          name: Publish Docker image
+          command:
+            docker push supportlik/carpool:$CIRCLE_BRANCH supportlik/carpool:latest supportlik/carpool:1.0.$CIRCLE_BUILD_NUM    
