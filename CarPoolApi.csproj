@@ -28,5 +28,9 @@
   <ItemGroup>
     <Folder Include="Models" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include=".circleci\config.yml" />
+  </ItemGroup>
 
 </Project>
