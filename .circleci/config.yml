@@ -4,31 +4,11 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
-  build:
-    docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0
+  build:    
     steps:
       - checkout
-      - run: 
-          name: Restore packages
-          command:
-            dotnet restore
-      - run:
-          name: Build App
-          command:
-            dotnet restore
-      - run:
-          name: Test App
-          command:
-            dotnet test
-      - run:
-          name: Publish App
-          command:
-            dotnet publish -c Release
-      - run:
-          name: Login Docker
-          command:
-            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - setup_remote_docker:
+          version: 19.03.13            
       - run:
           name: Build Docker image
           command:
