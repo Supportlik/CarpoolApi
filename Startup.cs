@@ -46,6 +46,7 @@ namespace CarPoolApi
 
             #endregion
 
+            services.AddCors();
             services.AddControllers().AddNewtonsoftJson(options => options.UseCamelCasing(true));
 
             #region swagger
@@ -117,6 +118,12 @@ namespace CarPoolApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(x =>
+                x.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed(origin => true)
+                    .AllowCredentials()
+            );
             app.UseAuthentication();
             app.UseAuthorization();
 
