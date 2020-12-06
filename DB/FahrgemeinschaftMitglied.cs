@@ -22,6 +22,11 @@ namespace CarPoolApi.DB
         {
             get { return Fahrgemeinschaft.Fahrts.Count(i => i.FahrerId == Id); }
         }
+
+        public bool Creator
+        {
+            get { return Fahrgemeinschaft.CreatorId == UserId; }
+        }
         
         [JsonIgnore]
         public virtual Fahrgemeinschaft Fahrgemeinschaft { get; set; }
